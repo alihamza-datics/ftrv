@@ -1,0 +1,3 @@
+API_URL=http://34.228.78.199/api/
+PORT=3000
+API_ASSETS_URL=http://34.228.78.199/assets/
