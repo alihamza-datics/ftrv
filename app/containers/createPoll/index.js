@@ -15,13 +15,7 @@ function CreatePoll() {
         <title>CreatePoll</title>
         <meta name="description" content="Description of CreatePoll" />
       </Helmet>
-      <CreatePollPage
-        heading="Create New Poll"
-        inputLabelName="Name"
-        inputLabelQuestion="Questions"
-        buttonName="Create"
-        optionButtonName="Add Options"
-      />
+      <CreatePollPage />
     </>
   );
 }

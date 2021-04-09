@@ -3,7 +3,7 @@ import { Formik, Form, FieldArray } from 'formik';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import * as Yup from 'yup';
+import { string, object, date, ref } from 'yup';
 import ClearIcon from '@material-ui/icons/Clear';
 import AddIcon from '@material-ui/icons/Add';
 import PersonIcon from '@material-ui/icons/Person';
@@ -11,20 +11,12 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import SaveIcon from '@material-ui/icons/Save';
 import CustomDatePicker from './datePicker';
 import { Input } from '../../index';
-import { useStyles } from './styles';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { H5 } from '../../typography';
 import { Toast } from '../../../utils/helper';
 
-const CreatePollPage = ({
-  heading,
-  inputLabelName,
-  inputLabelQuestion,
-  buttonName,
-  optionButtonName,
-}) => {
-  const classes = useStyles();
+const CreatePollPage = () => {
   const upperLimitForOptions = 4;
   return (
     <WrapInBreadcrumbs>
@@ -32,10 +24,10 @@ const CreatePollPage = ({
         <Formik
           initialValues={{
             options: [''],
-            textFieldName: '',
-            textFieldQuestion: '',
-            startDate: undefined,
-            endDate: undefined,
+            Name: '',
+            Question: '',
+            startDate: new Date(),
+            endDate: new Date(),
           }}
           onSubmit={() => {
             Toast({
@@ -43,33 +35,27 @@ const CreatePollPage = ({
               title: `Poll created successfully`,
             });
           }}
-          validationSchema={Yup.object().shape({
-            textFieldName: Yup.string().required('Required'),
-            textFieldQuestion: Yup.string().required('Required'),
-            startDate: Yup.date()
-              .required('Required')
-              .default(() => new Date()),
-            endDate: Yup.date()
-              .required('Required')
-              .when(
-                'startDate',
-                (startDate, schema) =>
-                  startDate &&
-                  schema.min(startDate, 'Must be greater than start date')
+          validationSchema={object().shape({
+            Name: string().required('*Required'),
+            Question: string(),
+
+            startDate: date()
+              .required('*Start Date Required')
+              .min(new Date().toLocaleString()),
+            endDate: date()
+              .required('*End Date Required')
+              .min(
+                ref('startDate'),
+                'End date should be greater than start date'
               ),
           })}
           render={({ values }) => (
             <Form>
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Box pt={15} px={2} width={[1, 1 / 2]}>
-                  <Box
-                    flex="1"
-                    display="flex"
-                    justifyContent={['center']}
-                    fullWidth
-                  >
+                  <Box display="flex" justifyContent={['center']}>
                     <Typography>
-                      <H5>{heading}</H5>
+                      <H5>Create New Poll</H5>
                     </Typography>
                   </Box>
 
@@ -80,19 +66,15 @@ const CreatePollPage = ({
                   >
                     <Box width={[1, 1 / 2]} mt={10} px={3}>
                       <Input
-                        OutlinedInputPlaceholder={inputLabelName}
-                        name="textFieldName"
+                        OutlinedInputPlaceholder="*Name"
+                        name="Name"
                         variant="outlined"
                         Icon={PersonIcon}
                         appendIcon
                       />
                     </Box>
                     <Box flex="1" mt={10} px={3}>
-                      <CustomDatePicker
-                        name="startDate"
-                        label="Start Date"
-                        className={classes.CustomFullWidth}
-                      />
+                      <CustomDatePicker name="startDate" label="Start Date*" />
                     </Box>
                   </Box>
 
@@ -102,17 +84,13 @@ const CreatePollPage = ({
                     flexDirection={['column', 'row']}
                   >
                     <Box flex="1" mt={10} px={3}>
-                      <CustomDatePicker
-                        label="End Date"
-                        name="endDate"
-                        className={classes.CustomFullWidth}
-                      />
+                      <CustomDatePicker label="End Date*" name="endDate" />
                     </Box>
                     <Box width={[1, 1 / 2]} mt={10} px={3}>
                       <Input
                         id="standard-basic"
-                        OutlinedInputPlaceholder={inputLabelQuestion}
-                        name="textFieldQuestion"
+                        OutlinedInputPlaceholder="Questions"
+                        name="Question"
                         variant="outlined"
                         Icon={HelpOutlineIcon}
                         appendIcon
@@ -135,7 +113,6 @@ const CreatePollPage = ({
                               width={[1, 1 / 2]}
                               mt={10}
                               px={3}
-                              position="relative"
                               display="flex"
                             >
                               <Box flex="1">
@@ -143,24 +120,12 @@ const CreatePollPage = ({
                                   OutlinedInputPlaceholder={`Option ${
                                     index + 1
                                   }`}
-                                  name={`options.${index}`}
+                                  name={`options-${index}`}
                                   variant="outlined"
+                                  Icon={ClearIcon}
+                                  onIconClick={() => arrayHelpers.remove(index)}
+                                  appendIcon
                                 />
-                              </Box>
-
-                              <Box
-                                position="absolute"
-                                top="0"
-                                right="0"
-                                pr={2}
-                                pt={2}
-                              >
-                                <Button
-                                  type="button"
-                                  onClick={() => arrayHelpers.remove(index)}
-                                >
-                                  X
-                                </Button>
                               </Box>
                             </Box>
                           ))}
@@ -189,7 +154,7 @@ const CreatePollPage = ({
                               type="button"
                               onClick={() => arrayHelpers.push('')}
                             >
-                              {optionButtonName}
+                              Add Options
                             </Button>
                           </Box>
                           <Box
@@ -204,7 +169,7 @@ const CreatePollPage = ({
                               type="submit"
                               startIcon={<SaveIcon />}
                             >
-                              {buttonName}
+                              Create
                             </Button>
                           </Box>
                           <Box
@@ -213,9 +178,7 @@ const CreatePollPage = ({
                             display="flex"
                             justifyContent={['center', 'center', 'left']}
                           >
-                            <Button startIcon={<ClearIcon fontSize="small" />}>
-                              Cancel
-                            </Button>
+                            <Button startIcon={<ClearIcon />}>Cancel</Button>
                           </Box>
                         </Box>
                       </Box>

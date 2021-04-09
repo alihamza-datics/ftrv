@@ -13,7 +13,7 @@ import Quote from '../containers/qoute/loadable';
 import usefulLinks from '../containers/usefulLinks/loadable';
 import UserProfile from '../containers/userProfile/loadable';
 import CeoMessage from '../containers/ceoMessage/loadable';
-import CreatePoll from '../containers/CreatePoll/loadable';
+import CreatePoll from '../containers/createPoll/loadable';
 import Events from '../containers/events/loadable';
 import { ROLES } from '../utils/constants';
 import createEvent from '../containers/createEvent/loadable';
@@ -89,8 +89,9 @@ export const routeArray = [
     path: '/createPoll',
     component: CreatePoll,
     exact: true,
-    breadCrumbKey: 'createPoll',
-    routeType: routeTypes.public,
+    breadCrumbKey: 'Create Poll',
+    routeType: routeTypes.private,
+    roles: [ROLES.USER],
   },
   {
     path: '/useful-links',
