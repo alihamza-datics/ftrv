@@ -6,15 +6,16 @@ import Button from '@material-ui/core/Button';
 import * as Yup from 'yup';
 import ClearIcon from '@material-ui/icons/Clear';
 import AddIcon from '@material-ui/icons/Add';
-import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
 import PersonIcon from '@material-ui/icons/Person';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import SaveIcon from '@material-ui/icons/Save';
 import CustomDatePicker from './datePicker';
 import { Input } from '../../index';
 import { useStyles } from './styles';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { H5 } from '../../typography';
+import { Toast } from '../../../utils/helper';
 
 const CreatePollPage = ({
   heading,
@@ -35,6 +36,12 @@ const CreatePollPage = ({
             textFieldQuestion: '',
             startDate: undefined,
             endDate: undefined,
+          }}
+          onSubmit={() => {
+            Toast({
+              icon: 'success',
+              title: `Poll created successfully`,
+            });
           }}
           validationSchema={Yup.object().shape({
             textFieldName: Yup.string().required('Required'),
@@ -195,7 +202,7 @@ const CreatePollPage = ({
                               variant="contained"
                               color="secondary"
                               type="submit"
-                              startIcon={<NotificationImportantIcon />}
+                              startIcon={<SaveIcon />}
                             >
                               {buttonName}
                             </Button>
