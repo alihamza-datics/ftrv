@@ -13,6 +13,7 @@ import Quote from '../containers/qoute/loadable';
 import usefulLinks from '../containers/usefulLinks/loadable';
 import UserProfile from '../containers/userProfile/loadable';
 import CeoMessage from '../containers/ceoMessage/loadable';
+import CreatePoll from '../containers/createPoll/loadable';
 import Events from '../containers/events/loadable';
 import { ROLES } from '../utils/constants';
 import createEvent from '../containers/createEvent/loadable';
@@ -83,6 +84,32 @@ export const routeArray = [
     exact: true,
     breadCrumbKey: 'My Profile',
     routeType: routeTypes.private,
+  },
+  {
+    path: '/polls',
+    component: CreatePoll,
+    exact: true,
+    breadCrumbKey: 'Poll',
+    routeType: routeTypes.private,
+    roles: [ROLES.USER],
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: CreatePoll,
+        exact: true,
+        breadCrumbKey: 'Create New Poll',
+        routeType: routeTypes.private,
+        // roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/edit/:id',
+        component: CreatePoll,
+        exact: true,
+        breadCrumbKey: 'Edit Poll',
+        routeType: routeTypes.private,
+        // roles: [ROLES.ADMIN, ROLES.USER],
+      },
+    ],
   },
   {
     path: '/useful-links',
