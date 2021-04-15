@@ -14,48 +14,51 @@ import { Input } from '../../index';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { H5 } from '../../typography';
-import { Toast } from '../../../utils/helper';
+import { ROLES } from '../../../utils/constants';
+import { useAuthContext } from '../../../context/authContext';
 
-const CreatePollPage = () => {
+const pollSchema = object().shape({
+  name: string().required('*Required'),
+  question: string().required('*Required'),
+
+  'options-0': string().required('*Option 1 is required'),
+  'options-1': string().required('*Option 2 is required'),
+
+  startDate: date()
+    .required('*Start Date Required')
+    .min(new Date().toLocaleString()),
+  endDate: date()
+    .required('*End Date Required')
+    .min(ref('startDate'), 'End date should be greater than start date'),
+});
+export const CreatePollPage = ({
+  onHandleSubmit,
+  id,
+  initialValues,
+  // pageTitle,
+}) => {
   const upperLimitForOptions = 4;
+  const {
+    user: {
+      data: { role },
+    },
+  } = useAuthContext();
   return (
     <WrapInBreadcrumbs>
       <WrapInCard>
         <Formik
-          initialValues={{
-            options: [''],
-            Name: '',
-            Question: '',
-            startDate: new Date(),
-            endDate: new Date(),
-          }}
+          initialValues={initialValues}
+          validationSchema={pollSchema}
           onSubmit={() => {
-            Toast({
-              icon: 'success',
-              title: `Poll created successfully`,
-            });
+            onHandleSubmit();
           }}
-          validationSchema={object().shape({
-            Name: string().required('*Required'),
-            Question: string(),
-
-            startDate: date()
-              .required('*Start Date Required')
-              .min(new Date().toLocaleString()),
-            endDate: date()
-              .required('*End Date Required')
-              .min(
-                ref('startDate'),
-                'End date should be greater than start date'
-              ),
-          })}
           render={({ values }) => (
             <Form>
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Box pt={15} px={2} width={[1, 1 / 2]}>
                   <Box display="flex" justifyContent={['center']}>
                     <Typography>
-                      <H5>Create New Poll</H5>
+                      <H5>{id ? 'Update' : 'Create New'} Poll</H5>
                     </Typography>
                   </Box>
 
@@ -67,7 +70,7 @@ const CreatePollPage = () => {
                     <Box width={[1, 1 / 2]} mt={10} px={3}>
                       <Input
                         OutlinedInputPlaceholder="*Name"
-                        name="Name"
+                        name="name"
                         variant="outlined"
                         Icon={PersonIcon}
                         appendIcon
@@ -90,7 +93,7 @@ const CreatePollPage = () => {
                       <Input
                         id="standard-basic"
                         OutlinedInputPlaceholder="Questions"
-                        name="Question"
+                        name="question"
                         variant="outlined"
                         Icon={HelpOutlineIcon}
                         appendIcon
@@ -157,21 +160,23 @@ const CreatePollPage = () => {
                               Add Options
                             </Button>
                           </Box>
-                          <Box
-                            ml={2}
-                            my={[2, 0]}
-                            display="flex"
-                            justifyContent={['center', 'left']}
-                          >
-                            <Button
-                              variant="contained"
-                              color="secondary"
-                              type="submit"
-                              startIcon={<SaveIcon />}
+                          {role === ROLES.USER && (
+                            <Box
+                              ml={2}
+                              my={[2, 0]}
+                              display="flex"
+                              justifyContent={['center', 'left']}
                             >
-                              Create
-                            </Button>
-                          </Box>
+                              <Button
+                                variant="contained"
+                                color="secondary"
+                                type="submit"
+                                startIcon={<SaveIcon />}
+                              >
+                                {id ? 'Update' : 'Create'}
+                              </Button>
+                            </Box>
+                          )}
                           <Box
                             ml={2}
                             my={[2, 0]}

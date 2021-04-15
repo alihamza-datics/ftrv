@@ -86,12 +86,30 @@ export const routeArray = [
     routeType: routeTypes.private,
   },
   {
-    path: '/createPoll',
+    path: '/polls',
     component: CreatePoll,
     exact: true,
-    breadCrumbKey: 'Create Poll',
+    breadCrumbKey: 'Poll',
     routeType: routeTypes.private,
     roles: [ROLES.USER],
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: CreatePoll,
+        exact: true,
+        breadCrumbKey: 'Create New Poll',
+        routeType: routeTypes.private,
+        // roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/edit/:id',
+        component: CreatePoll,
+        exact: true,
+        breadCrumbKey: 'Edit Poll',
+        routeType: routeTypes.private,
+        // roles: [ROLES.ADMIN, ROLES.USER],
+      },
+    ],
   },
   {
     path: '/useful-links',
