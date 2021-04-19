@@ -36,7 +36,6 @@ const SuccessProgressBar = withStyles((theme) => ({
 }))(LinearProgress);
 
 const useStyles = makeStyles(() => ({
-  spacing: 1,
   paper: {
     padding: '30px',
     borderRadius: '5px',
@@ -63,9 +62,6 @@ export const Poll = ({
   const classes = useStyles();
   const history = useHistory();
 
-  const navigateTo = (url) => {
-    history.push(url);
-  };
   const handleDeleteEvent = () => {
     Modal.fire();
   };
@@ -73,14 +69,11 @@ export const Poll = ({
     <>
       <Box>
         <Box mr={10} mb={2} my={3} display="flex" justifyContent="flex-end">
-          <IconButton>
-            <EditIcon
-              color="secondary"
-              onClick={() => navigateTo(`/polls/edit/${id}`)}
-            />
+          <IconButton onClick={() => history.push(`/polls/edit/${id}`)}>
+            <EditIcon color="secondary" />
           </IconButton>
-          <IconButton>
-            <DeleteIcon color="error" onClick={handleDeleteEvent} />
+          <IconButton onClick={handleDeleteEvent}>
+            <DeleteIcon color="error" />
           </IconButton>
         </Box>
         <Paper elevation={1} className={classes.paper}>
@@ -126,19 +119,12 @@ export const Poll = ({
               </Button>
             </Box>
             <Box my={3}>
-              {hidden ? (
-                <Button variant="contained" onClick={() => setHidden(false)}>
-                  Show Results
-                </Button>
-              ) : (
-                <Button variant="contained" onClick={() => setHidden(true)}>
-                  Hide Results
-                </Button>
-              )}
+              <Button variant="contained" onClick={() => setHidden(!hidden)}>
+                {hidden ? 'Show Results' : 'Hide Results'}
+              </Button>
             </Box>
           </Box>
-
-          {hidden ? null : (
+          {!hidden && (
             <>
               <Box my={3}>
                 {firstOption}

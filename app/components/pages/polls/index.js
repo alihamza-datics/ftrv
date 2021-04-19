@@ -59,7 +59,7 @@ export function PollsPage() {
         </Box>
 
         <Box display="flex" flexDirection={['column', 'column', 'row']}>
-          {numberOfPolls.map((val) => (
+          {numberOfPolls?.map((val) => (
             <Poll
               id={val.id}
               name={val.name}
