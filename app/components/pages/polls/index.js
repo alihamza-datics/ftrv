@@ -73,14 +73,8 @@ export function PollsPage() {
 
         <Box display="flex" flexDirection={['column', 'column', 'row']}>
           {numberOfPolls?.map((val) => (
-            <Box>
-              <Box
-                mr={10}
-                mb={2}
-                my={3}
-                display="flex"
-                justifyContent="flex-end"
-              >
+            <Box marginRight="30px">
+              <Box display="flex" justifyContent="flex-end">
                 <IconButton
                   onClick={() => history.push(`/polls/edit/${val.id}`)}
                 >

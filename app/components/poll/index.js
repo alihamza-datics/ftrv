@@ -35,7 +35,6 @@ const useStyles = makeStyles(() => ({
   paper: {
     padding: '30px',
     borderRadius: '5px',
-    marginRight: '30px',
   },
 }));
 
