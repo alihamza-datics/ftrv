@@ -1,4 +1,3 @@
-// import { Box } from '@material-ui/core';
 import React from 'react';
 import { Box, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
@@ -8,8 +7,6 @@ import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { H5 } from '../../typography';
 import { Poll } from '../../poll';
-// import { BodyTextLarge, H5 } from '../typography';
-// import { LinearProgress } from '../index';
 import { Modal } from '../../../utils/helper';
 
 export function PollsPage() {
@@ -57,8 +54,7 @@ export function PollsPage() {
       fourthOptionValue: 20,
     },
   ];
-  // const [hidden, setHidden] = useState(false);
-  // const classes = useStyles();
+
   const history = useHistory();
 
   const handleDeleteEvent = () => {

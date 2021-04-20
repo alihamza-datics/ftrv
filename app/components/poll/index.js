@@ -12,22 +12,22 @@ import { LinearProgress } from '../index';
 
 const ErrorProgressBar = withStyles((theme) => ({
   bar: {
-    backgroundColor: theme.palette.error.dark,
+    backgroundColor: theme.palette.error.main,
   },
 }))(LinearProgress);
 const WarningProgressBar = withStyles((theme) => ({
   bar: {
-    backgroundColor: theme.palette.warning.dark,
+    backgroundColor: theme.palette.warning.main,
   },
 }))(LinearProgress);
 const InfoProgressBar = withStyles((theme) => ({
   bar: {
-    backgroundColor: theme.palette.info.dark,
+    backgroundColor: theme.palette.info.main,
   },
 }))(LinearProgress);
 const SuccessProgressBar = withStyles((theme) => ({
   bar: {
-    backgroundColor: theme.palette.success.dark,
+    backgroundColor: theme.palette.success.main,
   },
 }))(LinearProgress);
 
