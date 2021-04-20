@@ -1,9 +1,16 @@
-import { Box } from '@material-ui/core';
+// import { Box } from '@material-ui/core';
 import React from 'react';
+import { Box, IconButton } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { useHistory } from 'react-router';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { H5 } from '../../typography';
 import { Poll } from '../../poll';
+// import { BodyTextLarge, H5 } from '../typography';
+// import { LinearProgress } from '../index';
+import { Modal } from '../../../utils/helper';
 
 export function PollsPage() {
   const numberOfPolls = [
@@ -50,7 +57,13 @@ export function PollsPage() {
       fourthOptionValue: 20,
     },
   ];
+  // const [hidden, setHidden] = useState(false);
+  // const classes = useStyles();
+  const history = useHistory();
 
+  const handleDeleteEvent = () => {
+    Modal.fire();
+  };
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
@@ -60,19 +73,37 @@ export function PollsPage() {
 
         <Box display="flex" flexDirection={['column', 'column', 'row']}>
           {numberOfPolls?.map((val) => (
-            <Poll
-              id={val.id}
-              name={val.name}
-              description={val.description}
-              firstOption={val.firstOption}
-              secondOption={val.secondOption}
-              thirdOption={val.thirdOption}
-              fourthOption={val.fourthOption}
-              firstOptionVotes={val.firstOptionValue}
-              secondOptionVotes={val.secondOptionValue}
-              thirdOptionVotes={val.thirdOptionValue}
-              fourthOptionVotes={val.fourthOptionValue}
-            />
+            <Box>
+              <Box
+                mr={10}
+                mb={2}
+                my={3}
+                display="flex"
+                justifyContent="flex-end"
+              >
+                <IconButton
+                  onClick={() => history.push(`/polls/edit/${val.id}`)}
+                >
+                  <EditIcon color="secondary" />
+                </IconButton>
+                <IconButton onClick={handleDeleteEvent}>
+                  <DeleteIcon color="error" />
+                </IconButton>
+              </Box>
+              <Poll
+                id={val.id}
+                name={val.name}
+                description={val.description}
+                firstOption={val.firstOption}
+                secondOption={val.secondOption}
+                thirdOption={val.thirdOption}
+                fourthOption={val.fourthOption}
+                firstOptionVotes={val.firstOptionValue}
+                secondOptionVotes={val.secondOptionValue}
+                thirdOptionVotes={val.thirdOptionValue}
+                fourthOptionVotes={val.fourthOptionValue}
+              />
+            </Box>
           ))}
         </Box>
       </WrapInCard>

@@ -6,13 +6,9 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
-import { Box, IconButton } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { useHistory } from 'react-router';
+import { Box } from '@material-ui/core';
 import { BodyTextLarge, H5 } from '../typography';
 import { LinearProgress } from '../index';
-import { Modal } from '../../utils/helper';
 
 const ErrorProgressBar = withStyles((theme) => ({
   bar: {
@@ -44,7 +40,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const Poll = ({
-  id,
   name,
   description,
   firstOption,
@@ -60,104 +55,90 @@ export const Poll = ({
 }) => {
   const [hidden, setHidden] = useState(false);
   const classes = useStyles();
-  const history = useHistory();
 
-  const handleDeleteEvent = () => {
-    Modal.fire();
-  };
   return (
     <>
-      <Box>
-        <Box mr={10} mb={2} my={3} display="flex" justifyContent="flex-end">
-          <IconButton onClick={() => history.push(`/polls/edit/${id}`)}>
-            <EditIcon color="secondary" />
-          </IconButton>
-          <IconButton onClick={handleDeleteEvent}>
-            <DeleteIcon color="error" />
-          </IconButton>
+      <Paper elevation={1} className={classes.paper}>
+        <Box mb={7}>
+          <H5>{name}</H5>
         </Box>
-        <Paper elevation={1} className={classes.paper}>
-          <Box my={7}>
-            <H5>{name}</H5>
-          </Box>
-          <Box>
-            <BodyTextLarge bold> {description}</BodyTextLarge>
-          </Box>
+        <Box>
+          <BodyTextLarge bold> {description}</BodyTextLarge>
+        </Box>
 
-          <RadioGroup
-            aria-label="poll"
-            name="poll"
-            value={radioValue}
-            onChange={handleChange}
-          >
-            <FormControlLabel
-              value={firstOption}
-              control={<Radio />}
-              label={firstOption}
-            />
-            <FormControlLabel
-              value={secondOption}
-              control={<Radio />}
-              label={secondOption}
-            />
-            <FormControlLabel
-              value={thirdOption}
-              control={<Radio />}
-              label={thirdOption}
-            />
-            <FormControlLabel
-              value={fourthOption}
-              control={<Radio />}
-              label={fourthOption}
-            />
-          </RadioGroup>
+        <RadioGroup
+          aria-label="poll"
+          name="poll"
+          value={radioValue}
+          onChange={handleChange}
+        >
+          <FormControlLabel
+            value={firstOption}
+            control={<Radio />}
+            label={firstOption}
+          />
+          <FormControlLabel
+            value={secondOption}
+            control={<Radio />}
+            label={secondOption}
+          />
+          <FormControlLabel
+            value={thirdOption}
+            control={<Radio />}
+            label={thirdOption}
+          />
+          <FormControlLabel
+            value={fourthOption}
+            control={<Radio />}
+            label={fourthOption}
+          />
+        </RadioGroup>
 
-          <Box display="flex" flexDirection={['column', 'row', 'row']}>
-            <Box mr={4} my={3}>
-              <Button variant="contained" color="secondary">
-                Vote
-              </Button>
+        <Box display="flex" flexDirection={['column', 'row', 'row']}>
+          <Box mr={4} my={3}>
+            <Button variant="contained" color="secondary">
+              Vote
+            </Button>
+          </Box>
+          <Box my={3}>
+            <Button variant="contained" onClick={() => setHidden(!hidden)}>
+              {hidden ? 'Show Results' : 'Hide Results'}
+            </Button>
+          </Box>
+        </Box>
+        {!hidden && (
+          <>
+            <Box my={3}>
+              {firstOption}
+              <SuccessProgressBar
+                variant="determinate"
+                value={firstOptionVotes}
+              />
             </Box>
             <Box my={3}>
-              <Button variant="contained" onClick={() => setHidden(!hidden)}>
-                {hidden ? 'Show Results' : 'Hide Results'}
-              </Button>
+              {secondOption}
+              <ErrorProgressBar
+                variant="determinate"
+                value={secondOptionVotes}
+              />
             </Box>
-          </Box>
-          {!hidden && (
-            <>
-              <Box my={3}>
-                {firstOption}
-                <SuccessProgressBar
-                  variant="determinate"
-                  value={firstOptionVotes}
-                />
-              </Box>
-              <Box my={3}>
-                {secondOption}
-                <ErrorProgressBar
-                  variant="determinate"
-                  value={secondOptionVotes}
-                />
-              </Box>
-              <Box my={3}>
-                {thirdOption}
-                <WarningProgressBar
-                  variant="determinate"
-                  value={thirdOptionVotes}
-                />
-              </Box>
-              <Box my={3}>
-                {fourthOption}
-                <InfoProgressBar
-                  variant="determinate"
-                  value={fourthOptionVotes}
-                />
-              </Box>
-            </>
-          )}
-        </Paper>
-      </Box>
+            <Box my={3}>
+              {thirdOption}
+              <WarningProgressBar
+                variant="determinate"
+                value={thirdOptionVotes}
+              />
+            </Box>
+            <Box my={3}>
+              {fourthOption}
+              <InfoProgressBar
+                variant="determinate"
+                value={fourthOptionVotes}
+              />
+            </Box>
+          </>
+        )}
+      </Paper>
     </>
   );
 };
