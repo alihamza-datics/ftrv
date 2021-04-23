@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -10,50 +10,31 @@ import { Box } from '@material-ui/core';
 import { BodyTextLarge, H5 } from '../typography';
 import { LinearProgress } from '../index';
 
-const ErrorProgressBar = withStyles((theme) => ({
-  bar: {
-    backgroundColor: theme.palette.error.main,
-  },
-}))(LinearProgress);
-const WarningProgressBar = withStyles((theme) => ({
-  bar: {
-    backgroundColor: theme.palette.warning.main,
-  },
-}))(LinearProgress);
-const InfoProgressBar = withStyles((theme) => ({
-  bar: {
-    backgroundColor: theme.palette.info.main,
-  },
-}))(LinearProgress);
-const SuccessProgressBar = withStyles((theme) => ({
-  bar: {
-    backgroundColor: theme.palette.success.main,
-  },
-}))(LinearProgress);
-
-const useStyles = makeStyles(() => ({
-  paper: {
-    padding: '30px',
-    borderRadius: '5px',
-  },
-}));
-
+const warning = 'warning';
+const main = 'main';
+const useStyles = (props) =>
+  makeStyles((theme) => ({
+    paper: {
+      padding: '30px',
+      borderRadius: '5px',
+    },
+    barColorPrimary: {
+      backgroundColor: theme.palette[warning[main]],
+    },
+  }));
 export const Poll = ({
+  options,
   name,
   description,
-  firstOption,
-  secondOption,
-  thirdOption,
-  fourthOption,
-  firstOptionVotes,
-  secondOptionVotes,
-  thirdOptionVotes,
-  fourthOptionVotes,
+
   handleChange,
   radioValue,
 }) => {
+  const colorArray = ['error', 'info', 'info', 'info'];
+  colorArray.map((color) => {
+    classes = useStyles(color)();
+  });
   const [hidden, setHidden] = useState(false);
-  const classes = useStyles();
 
   return (
     <>
@@ -71,26 +52,13 @@ export const Poll = ({
           value={radioValue}
           onChange={handleChange}
         >
-          <FormControlLabel
-            value={firstOption}
-            control={<Radio />}
-            label={firstOption}
-          />
-          <FormControlLabel
-            value={secondOption}
-            control={<Radio />}
-            label={secondOption}
-          />
-          <FormControlLabel
-            value={thirdOption}
-            control={<Radio />}
-            label={thirdOption}
-          />
-          <FormControlLabel
-            value={fourthOption}
-            control={<Radio />}
-            label={fourthOption}
-          />
+          {options?.map((val) => (
+            <FormControlLabel
+              value={val.label}
+              control={<Radio />}
+              label={val.label}
+            />
+          ))}
         </RadioGroup>
 
         <Box display="flex" flexDirection={['column', 'row', 'row']}>
@@ -105,36 +73,31 @@ export const Poll = ({
             </Button>
           </Box>
         </Box>
+
         {!hidden && (
           <>
-            <Box my={3}>
-              {firstOption}
-              <SuccessProgressBar
-                variant="determinate"
-                value={firstOptionVotes}
-              />
-            </Box>
-            <Box my={3}>
-              {secondOption}
-              <ErrorProgressBar
-                variant="determinate"
-                value={secondOptionVotes}
-              />
-            </Box>
-            <Box my={3}>
-              {thirdOption}
-              <WarningProgressBar
-                variant="determinate"
-                value={thirdOptionVotes}
-              />
-            </Box>
-            <Box my={3}>
-              {fourthOption}
-              <InfoProgressBar
-                variant="determinate"
-                value={fourthOptionVotes}
-              />
-            </Box>
+            {options?.map((val, index) => (
+              <Box my={3}>
+                {val.label}
+
+                <LinearProgress
+                  variant="determinate"
+                  value={val.result}
+                  classes={{
+                    // colorPrimary: classes.colorPrimary,
+                    barColorPrimary: classes.barColorPrimary,
+                  }}
+                  // className={classes.barColorPrimary}
+                  // classes={{
+                  //   colorPrimary: { backgroundColor: colorArray[index] },
+                  // }}
+                  // style={{ backgroundColor: colorArray[index] }}
+                  // variant="determinate"
+                  // value={50}
+                  // className={classes.barColor}
+                />
+              </Box>
+            ))}
           </>
         )}
       </Paper>
@@ -145,15 +108,6 @@ export const Poll = ({
 Poll.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  firstOption: PropTypes.string.isRequired,
-  secondOption: PropTypes.string.isRequired,
-  thirdOption: PropTypes.string.isRequired,
-  fourthOption: PropTypes.string.isRequired,
-
-  firstOptionVotes: PropTypes.number.isRequired,
-  secondOptionVotes: PropTypes.number.isRequired,
-  thirdOptionVotes: PropTypes.number.isRequired,
-  fourthOptionVotes: PropTypes.number.isRequired,
 
   handleChange: PropTypes.func.isRequired,
   radioValue: PropTypes.string.isRequired,

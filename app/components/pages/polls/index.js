@@ -1,3 +1,4 @@
+// import { Box } from '@material-ui/core';
 import React from 'react';
 import { Box, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
@@ -9,52 +10,7 @@ import { H5 } from '../../typography';
 import { Poll } from '../../poll';
 import { Modal } from '../../../utils/helper';
 
-export function PollsPage() {
-  const numberOfPolls = [
-    {
-      id: 1,
-      name: 'Elections',
-      description:
-        'Will be fare elections Will be fare electionsWill be fare electionsWill be fare electionsWill be fare electionsWill be fare elections',
-      firstOption: 'Ali',
-      firstOptionValue: 50,
-      secondOption: 'Hamza',
-      secondOptionValue: 70,
-      thirdOption: 'Zulifaqar',
-      thirdOptionValue: 40,
-      fourthOption: 'Waseem',
-      fourthOptionValue: 20,
-    },
-    {
-      id: 2,
-      name: 'Biding',
-      description:
-        'Will be Fare Biding Will be Fare BidingWill be Fare BidingWill be Fare BidingWill be Fare BidingWill be Fare BidingWill be Fare Biding',
-      firstOption: 'Ali',
-      firstOptionValue: 50,
-      secondOption: 'Hamza',
-      secondOptionValue: 70,
-      thirdOption: 'Zulifaqar',
-      thirdOptionValue: 90,
-      fourthOption: 'Waseem',
-      fourthOptionValue: 20,
-    },
-    {
-      id: 3,
-      name: 'Biding',
-      description:
-        'Will be Fare Biding Will be Fare BidingWill be Fare BidingWill be Fare BidingWill be Fare BidingWill be Fare BidingWill be Fare Biding',
-      firstOption: 'Ali',
-      firstOptionValue: 50,
-      secondOption: 'Hamza',
-      secondOptionValue: 70,
-      thirdOption: 'Zulifaqar',
-      thirdOptionValue: 20,
-      fourthOption: 'Waseem',
-      fourthOptionValue: 20,
-    },
-  ];
-
+export function PollsPage({ data }) {
   const history = useHistory();
 
   const handleDeleteEvent = () => {
@@ -68,7 +24,7 @@ export function PollsPage() {
         </Box>
 
         <Box display="flex" flexDirection={['column', 'column', 'row']}>
-          {numberOfPolls?.map((val) => (
+          {data?.map((val) => (
             <Box marginRight="30px">
               <Box display="flex" justifyContent="flex-end">
                 <IconButton
@@ -81,17 +37,9 @@ export function PollsPage() {
                 </IconButton>
               </Box>
               <Poll
-                id={val.id}
                 name={val.name}
                 description={val.description}
-                firstOption={val.firstOption}
-                secondOption={val.secondOption}
-                thirdOption={val.thirdOption}
-                fourthOption={val.fourthOption}
-                firstOptionVotes={val.firstOptionValue}
-                secondOptionVotes={val.secondOptionValue}
-                thirdOptionVotes={val.thirdOptionValue}
-                fourthOptionVotes={val.fourthOptionValue}
+                options={val.options}
               />
             </Box>
           ))}
