@@ -1,4 +1,3 @@
-// import { Box } from '@material-ui/core';
 import React from 'react';
 import { Box, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
@@ -22,8 +21,10 @@ export function PollsPage({ data }) {
         <Box my={7}>
           <H5> Polls </H5>
         </Box>
-
-        <Box display="flex" flexDirection={['column', 'column', 'row']}>
+        <Box
+          display="flex"
+          flexDirection={['column', 'column', 'column', 'row']}
+        >
           {data?.map((val) => (
             <Box marginRight="30px">
               <Box display="flex" justifyContent="flex-end">
