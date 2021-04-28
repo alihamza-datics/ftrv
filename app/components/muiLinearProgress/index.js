@@ -18,7 +18,7 @@ const BorderLinearProgress = ({ value, color }) => {
     },
     progressLabel: {
       position: 'relative',
-      top: '8px',
+      top: '11px',
       zIndex: 1,
       textAlign: 'end',
       display: 'flex',
@@ -31,7 +31,7 @@ const BorderLinearProgress = ({ value, color }) => {
 
   const classes = useStyles();
   return (
-    <Box lineHeight={0}>
+    <Box lineHeight={0.5}>
       <Box className={classes.progressLabel}>
         <span>{`${value}%`}</span>
       </Box>
