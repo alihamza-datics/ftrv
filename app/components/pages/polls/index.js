@@ -18,7 +18,7 @@ export function PollsPage({ data }) {
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
-        <Box my={7}>
+        <Box p={2} m={2} mt={5} mb={4}>
           <H5> Polls </H5>
         </Box>
         <Box
