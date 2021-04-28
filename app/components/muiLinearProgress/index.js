@@ -2,15 +2,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import React from 'react';
 import { Box } from '@material-ui/core';
+import { useTheme } from '@material-ui/styles';
 
 const BorderLinearProgress = ({ value, color }) => {
+  const theme = useTheme();
   const useStyles = makeStyles({
     root: {
       height: 15,
       borderRadius: 5,
     },
     colorPrimary: {
-      backgroundColor: '#E9E9E9',
+      backgroundColor:
+        theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
     },
     bar: {
       borderRadius: 5,
@@ -23,7 +26,7 @@ const BorderLinearProgress = ({ value, color }) => {
       textAlign: 'end',
       display: 'flex',
       '& span': {
-        color: 'white',
+        color: theme.palette.text.light,
         width: `${value - 3}%`,
       },
     },
