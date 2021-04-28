@@ -24,7 +24,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Home({ eventList, isLoading }) {
   const classes = useStyles();
-
+  const data = [
+    {
+      name: 'Elections',
+      description:
+        'Will be fare elections Will be fare electionsWill be fare electionsWill be fare electionsWill be fare electionsWill be fare elections',
+      options: [
+        {
+          label: 'Ali',
+          result: '20',
+        },
+        {
+          label: 'Hamza',
+          result: '90',
+        },
+        {
+          label: 'zulifiqar',
+          result: '50',
+        },
+        {
+          label: 'Wasim',
+          result: '60',
+        },
+      ],
+    },
+  ];
   return (
     <>
       <Grid xs={12} className={classes.root}>
@@ -36,31 +60,27 @@ function Home({ eventList, isLoading }) {
             flexDirection={['column', 'column', 'column', 'row']}
           >
             <Box
-              height="62vh"
+              height={['45vh', '50vh', '50vh', '50vh']}
               p={2}
-              mx={[0, 0, 0, 20]}
               width={[1, 1, 1, 1 / 2]}
+              mr={[0, 0, 0, 8]}
+              ml={[0, 0, 0, 8]}
             >
               <EventCalendar home eventList={eventList} isLoading={isLoading} />
             </Box>
             <Box
-              height="auto"
               p={2}
-              mx={[0, 0, 0, 20]}
+              mr={[0, 0, 0, 8]}
+              ml={[0, 0, 0, 8]}
               width={[1, 1, 1, 1 / 2]}
             >
-              <Poll
-                name="Biding"
-                description="Will be Fare Biding Will be Fare BidingWill be Fare BidingWill be Fare BidingWill be Fare BidingWill be Fare BidingWill be Fare Biding"
-                firstOption="Ali"
-                firstOptionValue="50"
-                secondOption="Hamza"
-                secondOptionValue="70"
-                thirdOption="Zulifaqar"
-                thirdOptionValue="20"
-                fourthOption="Waseem"
-                fourthOptionValue="20"
-              />
+              {data?.map((val) => (
+                <Poll
+                  name={val.name}
+                  description={val.description}
+                  options={val.options}
+                />
+              ))}
             </Box>
           </Box>
         </Grid>
