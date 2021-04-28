@@ -72,7 +72,7 @@ export const Poll = ({
           {!hidden && (
             <>
               {options?.map((val, index) => (
-                <Box mt={3}>
+                <Box my={3}>
                   {val.label}
                   <BorderLinearProgress
                     variant="determinate"
