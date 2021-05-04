@@ -35,7 +35,7 @@ function Poll() {
       ],
     },
     {
-      id: 1,
+      id: 2,
       name: 'Elections',
       description:
         'Will be fare elections Will be fare electionsWill be fare electionsWill be fare electionsWill be fare electionsWill be fare elections',
@@ -59,7 +59,7 @@ function Poll() {
       ],
     },
     {
-      id: 1,
+      id: 3,
       name: 'Elections',
       description:
         'Will be fare elections Will be fare electionsWill be fare electionsWill be fare electionsWill be fare electionsWill be fare elections',
@@ -83,6 +83,7 @@ function Poll() {
       ],
     },
   ];
+
   return (
     <>
       <Helmet>

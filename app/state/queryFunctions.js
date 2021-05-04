@@ -21,7 +21,16 @@ const {
   CREATE_EVENT,
   EVENTS,
   DELETE_EVENTS,
+  CREATE_POLL,
 } = APIS;
+
+//  ADD POLL
+export const createPoll = (payload) => http.post(CREATE_POLL, payload);
+
+export const getPollById = (id) => http.get(`${CREATE_POLL}/${id}`);
+
+export const updatePoll = (payload) =>
+  http.put(`${CREATE_POLL}/${payload.id}`, payload);
 
 // USER CRUD
 
