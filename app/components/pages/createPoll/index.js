@@ -9,6 +9,7 @@ import AddIcon from '@material-ui/icons/Add';
 import PersonIcon from '@material-ui/icons/Person';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import SaveIcon from '@material-ui/icons/Save';
+import PropTypes from 'prop-types';
 import CustomDatePicker from './datePicker';
 import { Input } from '../../index';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
@@ -31,26 +32,22 @@ const pollSchema = object().shape({
     .required('*End Date Required')
     .min(ref('startDate'), 'End date should be greater than start date'),
 });
-export const CreatePollPage = ({
-  onHandleSubmit,
-  id,
-  initialValues,
-  // pageTitle,
-}) => {
+export const CreatePollPage = ({ onHandleSubmit, id, initialValues }) => {
   const upperLimitForOptions = 4;
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
+
   return (
     <WrapInBreadcrumbs>
       <WrapInCard>
         <Formik
           initialValues={initialValues}
           validationSchema={pollSchema}
-          onSubmit={() => {
-            onHandleSubmit();
+          onSubmit={(values) => {
+            onHandleSubmit(values);
           }}
           render={({ values }) => (
             <Form>
@@ -200,3 +197,18 @@ export const CreatePollPage = ({
 };
 
 export default CreatePollPage;
+
+CreatePollPage.propTypes = {
+  initialValues: PropTypes.object,
+};
+CreatePollPage.defaultProps = {
+  initialValues: {
+    options: ['', ''],
+    name: '',
+    question: '',
+    'options-1': '',
+    'options-0': '',
+    startDate: new Date(),
+    endDate: new Date(),
+  },
+};

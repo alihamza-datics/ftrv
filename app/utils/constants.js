@@ -39,4 +39,5 @@ export const APIS = {
   CREATE_EVENT: '/events',
   EVENTS: '/events',
   DELETE_EVENTS: '/events',
+  CREATE_POLL: 'https://jsonplaceholder.typicode.com/posts',
 };

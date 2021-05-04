@@ -11,4 +11,5 @@ export const keys = {
   announcements: 'announcements',
   adminAnnouncements: 'adminAnnouncements',
   events: 'events',
+  getPoll: (payload) => ['poll', payload],
 };
